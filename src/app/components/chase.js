@@ -5,20 +5,33 @@ class Chase extends Component {
   componentDidMount() {
 
     var bee = document.getElementById("bee");
-    document.addEventListener("mousemove", getMouse); 
-
+    document.addEventListener("mousemove", getCoordinatesMouse); 
+    document.addEventListener("touchstart", getCoordinatesTouch); 
+    document.addEventListener("touchmove", getCoordinatesTouch); 
 
     bee.style.position = "absolute"; //css		
     var beepos = {x: 0, y: 0};
 
     setInterval(followMouse, 25);
     
-    var mouse = {x:0, y:0}; //mouse.x, mouse.y
+    var mouse = {x: 0, y: 0}; //mouse.x, mouse.y
     
     var dir = "right";
-    function getMouse(e){
+    function getCoordinatesMouse(e){
         mouse.x = e.pageX;
         mouse.y = e.pageY;
+        //Checking directional change
+        if(mouse.x > beepos.x){
+            dir = "right";
+        } else {
+            dir = "left";
+        }
+    }
+
+    function getCoordinatesTouch(e){
+        var touch = e.changedTouches[0]
+        mouse.x = touch.pageX;
+        mouse.y = touch.pageY;
         //Checking directional change
         if(mouse.x > beepos.x){
             dir = "right";
